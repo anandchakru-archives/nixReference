@@ -52,13 +52,13 @@ Categories=Utility;
 Do nothing on laptop lid close
 ```
 #!/bin/sh
-function ReplaceOrAppend() {
-  if grep -q "^$2"
+replaceOrAppend() {
+  if grep -q "^$2" $1
   then
       sed -i "s/^$2.*$/$3/" $1
   else
       echo "$3" >>$1
   fi
 }
-ReplaceOrAppend /etc/systemd/logind.conf "#HandleLidSwitch=suspend" "HandleLidSwitch=ignore"
+replaceOrAppend /etc/systemd/logind.conf "#HandleLidSwitch=suspend" "HandleLidSwitch=ignore"
 ```
