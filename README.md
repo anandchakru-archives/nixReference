@@ -52,6 +52,9 @@ Categories=Utility;
 Do nothing on laptop lid close
 ```
 #!/bin/sh
+changeOrAppend() {
+  grep -q '^'$2 $1 && sed -i 's/^'$2'.*/'$2'='$3'/' $1 || echo $2'='$3 >> $1
+}
 replaceOrAppend() {
   if grep -q "^$2" $1
   then
@@ -60,5 +63,75 @@ replaceOrAppend() {
       echo "$3" >>$1
   fi
 }
-replaceOrAppend /etc/systemd/logind.conf "#HandleLidSwitch=suspend" "HandleLidSwitch=ignore"
+#replaceOrAppend "/etc/systemd/logind.conf" "#HandleLidSwitch=suspend" "HandleLidSwitch=ignore"
+changeOrAppend "/etc/systemd/logind.conf" "HandleLidSwitch" "ignore"
+systemctl restart systemd-logind
 ```
+##File permissions
+- `---` `0`
+- `--x` `1`
+- `-w-` `2`
+- `-wx` `3`
+- `r--` `4`
+- `r-x` `5`
+- `rw-` `6`
+- `rwx` `7`
+```
+$$$: ls -l
+drwxrw-r-x  2 chakru group1 4096 Jun  1 22:56 nixReference
+```
+Directory flag - `d`
+
+Owner(**chakru**)'s access - `rwx`
+
+**group1** user's access - `rw-`
+
+Every other user's access - `r-x`
+
+```
+$$$: ls -l /usr/bin/passwd
+-rwsr-sr-x 1 root root 54256 Mar 29 02:25 /usr/bin/passwd
+```
+s instead of x means, SUID/SGID bit is set. Which means, when a normal user executes passwd, he gains root access only for passwd does (eg: update password into /etc/shadow, for which only root has write access)
+
+S instead of x means, the file doesnt have x (execute permission) but only SUID/SGID is set
+
+Commands:
+```
+$$$: ls -l
+drwxrwxr-x  2 chakru group1 4096 Jun  1 22:56 nixReference
+$$$: stat -c "%a %n" nixReference
+775 nixReference
+
+$$$: chmod -R 777 nixReference
+
+$$$: stat -c "%a" nixReference
+777
+
+$$$: ls -l
+drwxrwxrwx  2 chakru group1 4096 Jun  1 22:56 nixReference
+
+$$$: chgrp -R smbshare nixReference
+
+$$$: ls -l
+drwxrwxrwx 2 chakru smbshare 4096 Jun  1 22:56 nixReference
+
+$$$: sudo chown -R smbchakru nixReference
+
+$$$: ls -l
+drwxrwxrwx 2 smbchakru smbshare 4096 Jun  1 22:56 nixReference
+
+$$$: chmod -R ug+s nixReference
+
+$$$: ls -l
+drwsrwsrwx 2 smbchakru smbshare 4096 Jun  1 22:56 nixReference
+
+$$$: chmod -R -x nixReference
+
+$$$: ls -l
+drwSrwSrwx 2 smbchakru smbshare 4096 Jun  1 22:56 nixReference
+
+```
+List all users:`awk -F: '{ print $1 }' /etc/passwd`
+
+Disk Space Human Readable: `df -kh`
