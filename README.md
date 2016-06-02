@@ -67,6 +67,32 @@ replaceOrAppend() {
 changeOrAppend "/etc/systemd/logind.conf" "HandleLidSwitch" "ignore"
 systemctl restart systemd-logind
 ```
+
+List all users:`awk -F: '{ print $1 }' /etc/passwd`
+
+Disk Space Human Readable: `df -kh`
+
+Find file without permission denied: `find /. -name 'fname' 2>&1 | grep -v 'Permission denied'`
+
+List only directories: `ls -l| grep '^d'`
+
+List jars loaded by java (with pid 21248): `/usr/sbin/lsof -p 21284 | grep jar > /tmp/j.txt`
+
+Memory details: `free -m`
+
+Highlight with tail: `tail -f file.log | sed "s/\\(TESTTOHIGHLIGHT\\)/{%CTRL%}v{%CTRL%}[[46;1m\\1{%CTRL%}v{%CTRL%}[[0m/g"`
+
+Progress/Status of dd: `watch -n5 'sudo kill -USR1 $(pgrep ^dd)'`
+
+##CPU
+
+Generate load: `yes > /dev/null &`
+
+Stop load: `killall yes`
+
+Monitor cpu load: `top`
+
+
 ##File permissions
 - `---` `0`
 - `--x` `1`
@@ -132,6 +158,3 @@ $$$: ls -l
 drwSrwSrwx 2 smbchakru smbshare 4096 Jun  1 22:56 nixReference
 
 ```
-List all users:`awk -F: '{ print $1 }' /etc/passwd`
-
-Disk Space Human Readable: `df -kh`
