@@ -84,6 +84,13 @@ Highlight with tail: `tail -f file.log | sed "s/\\(TESTTOHIGHLIGHT\\)/{%CTRL%}v{
 
 Progress/Status of dd: `watch -n5 'sudo kill -USR1 $(pgrep ^dd)'`
 
+Date/Time:
+```
+#!/bin/sh
+d=$(date +"%Y%m%d%H%M%S")
+echo datetime: $d
+```
+
 ##CPU
 
 Generate load: `yes > /dev/null &`
@@ -91,7 +98,6 @@ Generate load: `yes > /dev/null &`
 Stop load: `killall yes`
 
 Monitor cpu load: `top`
-
 
 ##File permissions
 - `---` `0`
