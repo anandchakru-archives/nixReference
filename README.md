@@ -159,7 +159,7 @@ drwSrwSrwx 2 smbchakru smbshare 4096 Jun  1 22:56 nixReference
 
 ```
 ##Disk utils
-Backup: `dd dd if=/dev/sdaX | bzip2 -9f >/media/chakru/90b/bckp.img.bz2`
+Backup: `dd if=/dev/sdaX | bzip2 -9f >/media/chakru/90b/bckp.img.bz2`
 
 Restore: `bunzip2 -dc /media/chakru/90b/bckp.img.bz2 | dd of=/dev/sdaX`
 
