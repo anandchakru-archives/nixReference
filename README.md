@@ -158,3 +158,27 @@ $$$: ls -l
 drwSrwSrwx 2 smbchakru smbshare 4096 Jun  1 22:56 nixReference
 
 ```
+##Disk utils
+Backup: `dd dd if=/dev/sdaX | bzip2 -9f >/media/chakru/90b/bckp.img.bz2`
+
+Restore: `bunzip2 -dc /media/chakru/90b/bckp.img.bz2 | dd of=/dev/sdaX`
+
+Mount iso file: `mount -t iso9660 -o loop win7.iso /media/chakru/90b`
+
+Mount CD: `mount -t iso9660 -o ro /dev/cdrom /media/chakru/90b`
+
+Unmount forcefully: `umount -f /media/chakru/90b`
+
+Find drives UUID: `blkid`
+
+List all mounts: `mount`
+
+Unmount all: `umount -a`
+
+Format drive with fat: `sudo mkfs.vfat /dev/sdaX`
+
+Format drive with ntfs: `sudo mkfs.ntfs /dev/sdaX`
+
+Format drive with ext4: `sudo mkfs.ext4 /dev/sdaX`
+
+Partition disk: `fdisk /dev/sda`
