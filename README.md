@@ -128,6 +128,12 @@ s instead of x means, SUID/SGID bit is set. Which means, when a normal user exec
 
 S instead of x means, the file doesnt have x (execute permission) but only SUID/SGID is set
 
+List installed items:
+`dpkg --list`
+
+Uninstall item:
+`sudo apt-get --purge remove unetbootin`
+
 Commands:
 ```
 $$$: ls -l
