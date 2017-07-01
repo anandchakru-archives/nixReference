@@ -67,6 +67,12 @@ replaceOrAppend() {
 changeOrAppend "/etc/systemd/logind.conf" "HandleLidSwitch" "ignore"
 systemctl restart systemd-logind
 ```
+List app using a port(eg 4444) and kill it
+```
+lsof -i -n -P | grep 4444
+    java      9945 chakru   15u  IPv6  58576      0t0  TCP *:4444 (LISTEN)
+kill -9 9945
+```
 
 List all users:`awk -F: '{ print $1 }' /etc/passwd`
 
